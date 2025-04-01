@@ -51,7 +51,7 @@ body {
     gap: 10px;
     font-weight: bold;
     font-size: 1.2rem;
-    color: var(--primary-color);
+    color: #000000;
 }
 
 .app-logo img {
