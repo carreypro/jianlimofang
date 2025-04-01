@@ -3,9 +3,9 @@
  * 处理简历优化请求并与DeepSeek API通信
  */
 
-// 环境变量设置
-const DEEPSEEK_API_URL = 'https://api.deepseek.com/v1/chat/completions';
+// 环境变量声明
 let DEEPSEEK_API_KEY = '';
+const DEEPSEEK_API_URL = 'https://api.deepseek.com/v1/chat/completions';
 
 // CORS 头信息
 const corsHeaders = {
@@ -16,7 +16,7 @@ const corsHeaders = {
 };
 
 // 处理OPTIONS请求（预检请求）
-function handleOptions(request) {
+function handleOptions() {
   return new Response(null, {
     status: 204,
     headers: corsHeaders,
@@ -80,8 +80,6 @@ async function handleApiRequest(request, env) {
         }
       );
     }
-
-    console.log('调用DeepSeek API优化简历...');
     
     // 调用DeepSeek API
     const response = await fetch(DEEPSEEK_API_URL, {
@@ -126,7 +124,6 @@ async function handleApiRequest(request, env) {
       }
     );
   } catch (error) {
-    console.error('处理请求出错:', error);
     return new Response(
       JSON.stringify({ error: error.message || '服务器内部错误' }),
       {
@@ -140,39 +137,62 @@ async function handleApiRequest(request, env) {
   }
 }
 
+// 测试端点处理函数
+function handleTestRequest() {
+  return new Response(
+    JSON.stringify({ status: 'ok', message: 'API测试成功' }),
+    {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        ...corsHeaders,
+      },
+    }
+  );
+}
+
 /**
  * 请求处理主入口
  */
 export default {
-  async fetch(request, env, ctx) {
-    // 获取请求URL和方法
-    const url = new URL(request.url);
-    const method = request.method.toUpperCase();
-    
-    console.log(`收到请求: ${method} ${url.pathname}`);
-
-    // 所有请求都添加CORS头
-    if (method === 'OPTIONS') {
-      return handleOptions(request);
-    }
-
-    // 处理API请求
-    if (url.pathname === '/api/optimize') {
-      if (method === 'POST') {
-        return handleApiRequest(request, env);
+  async fetch(request, env) {
+    try {
+      // 获取请求URL和方法
+      const url = new URL(request.url);
+      const method = request.method.toUpperCase();
+      
+      // 所有请求都添加CORS头
+      if (method === 'OPTIONS') {
+        return handleOptions();
       }
-      return new Response('Method Not Allowed', { 
-        status: 405,
+
+      // 处理API请求
+      if (url.pathname === '/api/optimize') {
+        if (method === 'POST') {
+          return await handleApiRequest(request, env);
+        }
+        return new Response('Method Not Allowed', { 
+          status: 405,
+          headers: corsHeaders
+        });
+      }
+
+      // 测试端点
+      if (url.pathname === '/api/test') {
+        return handleTestRequest();
+      }
+
+      // 对于其他路径，返回404
+      return new Response('Not Found', { 
+        status: 404,
         headers: corsHeaders
       });
-    }
-
-    // 测试端点
-    if (url.pathname === '/api/test') {
+    } catch (error) {
+      // 全局错误处理
       return new Response(
-        JSON.stringify({ status: 'ok', message: 'API测试成功' }),
+        JSON.stringify({ error: '服务器内部错误', details: error.message }),
         {
-          status: 200,
+          status: 500,
           headers: {
             'Content-Type': 'application/json',
             ...corsHeaders,
@@ -180,11 +200,5 @@ export default {
         }
       );
     }
-
-    // 对于其他路径，返回404
-    return new Response('Not Found', { 
-      status: 404,
-      headers: corsHeaders
-    });
-  },
+  }
 };
