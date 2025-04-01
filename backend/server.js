@@ -119,11 +119,6 @@ const generatePrompt = (resumeText) => {
 # Output:
 - 输出纯文本格式，便于直接复制使用
 
-原始简历内容：
-${resumeText}
-
-请直接输出优化后的完整简历内容，使用纯文本格式。`;
-};
 
 app.post('/api/optimize', async (req, res) => {
   try {
@@ -153,7 +148,7 @@ app.post('/api/optimize', async (req, res) => {
           { role: 'user', content: generatePrompt(resumeText) }
         ],
         temperature: 0.3,  // 降低随机性
-        max_tokens: 2000
+        max_tokens: 4000
       },
       {
         headers: {
