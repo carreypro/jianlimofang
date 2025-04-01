@@ -5,11 +5,12 @@
 
 // 环境变量设置
 const DEEPSEEK_API_URL = 'https://api.deepseek.com/v1/chat/completions';
+let DEEPSEEK_API_KEY = '';
 
 // CORS 头信息
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   'Access-Control-Max-Age': '86400',
 };
@@ -45,8 +46,24 @@ ${resumeText}
 /**
  * 处理简历优化API请求
  */
-async function handleApiRequest(request) {
+async function handleApiRequest(request, env) {
   try {
+    // 设置DeepSeek API密钥
+    DEEPSEEK_API_KEY = env.DEEPSEEK_API_KEY;
+    
+    if (!DEEPSEEK_API_KEY) {
+      return new Response(
+        JSON.stringify({ error: 'API密钥未设置' }),
+        {
+          status: 500,
+          headers: {
+            'Content-Type': 'application/json',
+            ...corsHeaders,
+          },
+        }
+      );
+    }
+    
     // 解析请求体
     const requestData = await request.json();
     const { resumeText } = requestData;
@@ -64,6 +81,8 @@ async function handleApiRequest(request) {
       );
     }
 
+    console.log('调用DeepSeek API优化简历...');
+    
     // 调用DeepSeek API
     const response = await fetch(DEEPSEEK_API_URL, {
       method: 'POST',
@@ -90,7 +109,7 @@ async function handleApiRequest(request) {
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.error?.message || '调用AI服务时出错');
+      throw new Error(errorData.error?.message || 'DeepSeek API调用失败');
     }
 
     const data = await response.json();
@@ -107,6 +126,7 @@ async function handleApiRequest(request) {
       }
     );
   } catch (error) {
+    console.error('处理请求出错:', error);
     return new Response(
       JSON.stringify({ error: error.message || '服务器内部错误' }),
       {
@@ -125,24 +145,46 @@ async function handleApiRequest(request) {
  */
 export default {
   async fetch(request, env, ctx) {
-    // 设置DeepSeek API密钥
-    DEEPSEEK_API_KEY = env.DEEPSEEK_API_KEY;
-    
     // 获取请求URL和方法
     const url = new URL(request.url);
     const method = request.method.toUpperCase();
+    
+    console.log(`收到请求: ${method} ${url.pathname}`);
+
+    // 所有请求都添加CORS头
+    if (method === 'OPTIONS') {
+      return handleOptions(request);
+    }
 
     // 处理API请求
     if (url.pathname === '/api/optimize') {
-      if (method === 'OPTIONS') {
-        return handleOptions(request);
-      } else if (method === 'POST') {
-        return handleApiRequest(request);
+      if (method === 'POST') {
+        return handleApiRequest(request, env);
       }
-      return new Response('Method Not Allowed', { status: 405 });
+      return new Response('Method Not Allowed', { 
+        status: 405,
+        headers: corsHeaders
+      });
+    }
+
+    // 测试端点
+    if (url.pathname === '/api/test') {
+      return new Response(
+        JSON.stringify({ status: 'ok', message: 'API测试成功' }),
+        {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json',
+            ...corsHeaders,
+          },
+        }
+      );
     }
 
     // 对于其他路径，返回404
-    return new Response('Not Found', { status: 404 });
+    return new Response('Not Found', { 
+      status: 404,
+      headers: corsHeaders
+    });
   },
 };
