@@ -143,9 +143,9 @@ app.post('/api/optimize', async (req, res) => {
         messages: [
           {
             role: 'system',
-            content: '你是一位专业的简历优化顾问，拥有丰富的人力资源和招聘经验，精通中国职场文化和各行业简历标准。你擅长分析简历内容、结构和表达方式，并能针对性地提供改进建议，使简历更具竞争力。'
+            content: generatePrompt('') // 将完整提示词模板作为系统消息
           },
-          { role: 'user', content: generatePrompt(resumeText) }
+          { role: 'user', content: resumeText } // 用户消息仅包含简历文本
         ],
         temperature: 0.3,  // 降低随机性
         max_tokens: 4000
