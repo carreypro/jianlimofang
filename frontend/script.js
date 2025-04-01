@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const navCopyBtn = document.getElementById('navCopyBtn'); // 添加导航栏复制按钮
     const notificationArea = document.getElementById('notificationArea');
     
-    // 设置API端点 - 修改为相对路径或Worker的URL
-    const API_URL = '/api/optimize';
+    // 设置API端点 - Worker的URL
+    const API_URL = 'https://resume-optimizer-api.nafiuriak.workers.dev/api/optimize';
     
     // 注释掉默认显示错误信息的行 - 生产环境下不需要
     // showErrorMessage('简历优化失败，请稍后再试');
