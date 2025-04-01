@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简历魔方 - AI简历优化工具</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部导航栏 -->
+        <div class="top-navbar">
+            <div class="app-logo">
+                <i class="fas fa-cube"></i>
+                <span>简历魔方</span>
+            </div>
+            <!-- 将按钮添加到导航栏右侧 -->
+            <div class="nav-actions">
+                <button id="optimizeBtn" class="action-button">
+                    <i class="fas fa-magic"></i>
+                    优化简历
+                </button>
+                <button id="navCopyBtn" class="action-button">
+                    <i class="fas fa-copy"></i>
+                    复制结果
+                </button>
+            </div>
+        </div>
+
+        <header>
+            <p>最佳使用实践：分段修改效果更优</p>
+        </header>
+
+        <main>
+            <!-- 添加通知区域 -->
+            <div id="notificationArea"></div>
+            
+            <div class="resume-container">
+                <div class="input-section">
+                    <div class="section-header">
+                        <h2>原始内容</h2>
+                        <div class="section-actions">
+                            <button class="icon-button" id="clearInput" title="清空内容">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="textarea-wrapper">
+                        <textarea id="resumeInput" placeholder="在此粘贴您的简历文本..."></textarea>
+                    </div>
+                    <!-- 移除了这里的优化按钮 -->
+                </div>
+                
+                <div class="output-section" id="outputSection">
+                    <div class="section-header">
+                        <h2>优化后的内容</h2>
+                        <div class="section-actions">
+                            <button class="icon-button" id="copyOutput" title="复制到剪贴板">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="textarea-wrapper">
+                        <textarea id="resumeOutput" readonly placeholder="优化后的内容将显示在这里..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div id="loadingIndicator" class="loading-indicator">
+                <div class="spinner"></div>
+                <p>AI正在优化您的简历，请稍候...</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>简历魔方 | by carrey | DeepSeek 提供支持</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
