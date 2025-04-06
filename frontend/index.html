@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简历重塑 - AI驱动的简历优化工具</title>
+    <link rel="icon" href="image/favicon.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 通知区域 -->
+    <div id="notificationArea"></div>
+    
+    <!-- 加载指示器 -->
+    <div id="loadingIndicator" class="loading-indicator">
+        <div class="spinner"></div>
+        <p>AI正在优化您的简历，请稍候...</p>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="image/logo.png" alt="简历重塑Logo">
+                <span>简历重塑</span>
+            </div>
+            <div class="nav-links">
+                <a href="https://huoshankapian.pages.dev/" class="nav-link" target="_blank">火山卡片</a>
+                <a href="https://xiangsumofang.pages.dev/" class="nav-link" target="_blank">像素工坊</a>
+                <a href="https://carreypro.com/" class="nav-link" target="_blank">作者</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero 区域 -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>AI驱动简历优化</h1>
+                <p class="hero-subtitle">让你的简历脱颖而出，提高面试机会</p>
+                <p class="hero-description">
+                    简历重塑利用DeepSeek最新模型，帮助你优化简历内容、格式和表达，使其更符合招聘要求，
+                    提高通过ATS筛选系统的几率，让你在竞争激烈的求职市场中占据优势。
+                </p>
+                <div class="hero-buttons">
+                    <a href="#tool" class="primary-button">
+                        <i class="fas fa-magic"></i>
+                        立即优化
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="floating-resume">
+                    <div class="resume-paper">
+                        <div class="resume-line"></div>
+                        <div class="resume-line short"></div>
+                        <div class="resume-line medium"></div>
+                        <div class="resume-line"></div>
+                        <div class="resume-line short"></div>
+                        <div class="resume-line medium"></div>
+                    </div>
+                    <div class="magic-wand">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wave-divider">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path fill="#ffffff" fill-opacity="1" d="M0,80C240,70,480,60,720,60C960,60,1200,70,1440,80L1440,120L0,120Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- 工具区域 -->
+    <section class="tool-section" id="tool">
+        <div class="section-container">
+            <h2 class="section-title">开始优化您的简历</h2>
+            <div class="tool-container">
+                <div class="tool-header">
+                    <div class="tool-tabs">
+                        <!-- 删除了简历优化标签按钮 -->
+                    </div>
+                    <div class="tool-actions">
+                        <button id="optimizeBtn" class="action-button">
+                            <i class="fas fa-magic"></i>
+                            优化
+                        </button>
+                        <button id="navCopyBtn" class="action-button secondary">
+                            <i class="fas fa-copy"></i>
+                            复制
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="resume-container">
+                    <div class="input-section">
+                        <div class="section-actions">
+                            <button class="icon-button" id="clearInput" title="清空内容">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="textarea-wrapper">
+                            <textarea id="resumeInput" placeholder="在此粘贴您的简历文本..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="output-section" id="outputSection">
+                        <div class="section-actions">
+                            <button class="icon-button" id="copyOutput" title="复制到剪贴板">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="textarea-wrapper">
+                            <textarea id="resumeOutput" readonly placeholder="优化后的内容将显示在这里..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-container">
+            <!-- 删除了页尾的logo和链接 -->
+            <div class="footer-copyright">
+                <p>by carrey | DeepSeek 提供支持</p>
+                <p>&copy; 2025 保留所有权利</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

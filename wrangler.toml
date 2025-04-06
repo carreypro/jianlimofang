@@ -1,0 +1,7 @@
+name = "resume-optimizer-api"
+main = "worker.js"
+compatibility_date = "2023-07-10"
+
+# 环境变量在部署后需要设置
+# [vars]
+# DEEPSEEK_API_KEY = ""

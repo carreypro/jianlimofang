@@ -1,0 +1,16 @@
+# 依赖包文件夹
+node_modules/
+
+# 环境变量配置文件
+.env
+
+# 日志文件
+*.log
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# IDE生成的文件夹
+.idea/
+.vscode/
