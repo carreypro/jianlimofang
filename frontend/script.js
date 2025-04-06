@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const notificationArea = document.getElementById('notificationArea');
     
     // 设置API端点 - Worker的URL
-    const API_URL = 'https://resume-optimizer-api.nafiuriak.workers.dev/api/optimize';
+    const API_URL = 'https://api.resume.carreypro.com/api/optimize';
     
     // 注释掉默认显示错误信息的行 - 生产环境下不需要
     // showErrorMessage('简历优化失败，请稍后再试');
